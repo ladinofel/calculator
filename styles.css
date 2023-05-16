@@ -1,0 +1,23 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+}
+
+.display {
+  min-height: 50px;
+  border-style: solid;
+  margin-bottom: 10px;
+}
+.button-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 5px;
+}
+
+button {
+  min-width: 100px;
+  min-height: 50px;
+  font-size: larger;
+}
