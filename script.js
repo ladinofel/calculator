@@ -1,11 +1,13 @@
-const add = ((a,b) => a + b);
-const substract = ((a,b) => a - b);
-const multiply = ((a,b) => a * b);
-const divide = ((a,b) => a / b);
+const add = ((a,b) => result = a + b);
+const substract = ((a,b) => result = a - b);
+const multiply = ((a,b) => result = a * b);
+const divide = ((a,b) => result = a / b);
 
-let value1 = 'empty';
-let value2 = 'empty';
-let operator = 'empty';
+
+let value1 = '';
+let value2 = '';
+let operator = '';
+let result = 0;
 
 function operate(value1, value2, operator){
   if(operator === 'add'){
@@ -19,28 +21,33 @@ function operate(value1, value2, operator){
   }
   };
 
+  function startsCalculator(){
   const buttons = document.querySelectorAll("button");
   buttons.forEach(button => button.addEventListener('click', function(e){
     if(e.target.classList.contains('grid-num')){
-      if(value1 === 'empty'){
-        value1 = Number(e.target.id);
+      if(operator === ''){
+        value1 += e.target.id;
         console.log(value1);
       } else {
-        value2 = Number(e.target.id);
+        value2 += e.target.id;
         console.log(value2);
       }
     } else if(e.target.classList.contains('grid-operator')){
-      if(operator === 'empty'){
+      if(operator === ''){
         operator = e.target.id;
         console.log(operator);
       }
     } else if(e.target.id === 'equals'){
-      console.log(operate(value1, value2, operator));
+      console.log(operate(Number(value1), Number(value2), operator));
+      value1 = result;
+      value2 = '';
+      operator = '';
     } else {      
       alert('You clicked neither a number not an operand!')}
   }));
+};
   
-  
+startsCalculator();
 
 
 
