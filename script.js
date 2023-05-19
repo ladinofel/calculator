@@ -36,14 +36,24 @@ function operate(value1, value2, operator){
       if(operator === ''){
         operator = e.target.id;
         console.log(operator);
+      } else if(operator != ''){
+        console.log(operate(Number(value1), Number(value2), operator));
+        value1 = result;
+        value2 = '';
+        operator = e.target.id;
       }
     } else if(e.target.id === 'equals'){
+      if(value1 === '' || operator === '' || value2 === ''){
+        alert('Please enter some values!');
+      } else {
       console.log(operate(Number(value1), Number(value2), operator));
-      value1 = result;
-      value2 = '';
-      operator = '';
-    } else {      
-      alert('You clicked neither a number not an operand!')}
+        value1 = result;
+        value2 = '';
+        //operator = e.target.id;
+      }
+    } else if(e.target.id === 'clear-entry'){
+      alert('clear entry');
+    }
   }));
 };
   
