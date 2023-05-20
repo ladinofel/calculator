@@ -1,7 +1,10 @@
 const add = ((a,b) => result = a + b);
 const substract = ((a,b) => result = a - b);
 const multiply = ((a,b) => result = a * b);
-const divide = ((a,b) => result = a / b);
+const divide = ((a,b) => {
+  if(b === 0){
+    alert('You cannot divide by zero!')} else {
+    return result = a / b}});
 
 
 let value1 = '';
@@ -49,7 +52,7 @@ function operate(value1, value2, operator){
       console.log(operate(Number(value1), Number(value2), operator));
         value1 = result;
         value2 = '';
-        //operator = e.target.id;
+        operator = '';
       }
     } else if(e.target.id === 'clear-entry'){
       alert('clear entry');
