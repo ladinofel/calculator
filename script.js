@@ -1,10 +1,10 @@
-const add = ((a,b) => result = a + b);
-const substract = ((a,b) => result = a - b);
-const multiply = ((a,b) => result = a * b);
+const add = ((a,b) => result = Math.round(((a + b) + Number.EPSILON) * 100 ) / 100);
+const substract = ((a,b) => result = Math.round(((a - b) + Number.EPSILON) * 100 ) / 100);
+const multiply = ((a,b) => result = Math.round(((a * b) + Number.EPSILON) * 100 ) / 100);
 const divide = ((a,b) => {
   if(b === 0){
     alert('You cannot divide by zero!')} else {
-    return result = a / b}});
+    return result = Math.round(((a / b) + Number.EPSILON) * 100) / 100}});
 
 
 let value1 = '';
