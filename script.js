@@ -25,14 +25,20 @@ function operate(value1, value2, operator){
   };
 
   function startsCalculator(){
+  const display = document.querySelector('.display');
+  const valueDisplay = document.createElement('p');
   const buttons = document.querySelectorAll("button");
   buttons.forEach(button => button.addEventListener('click', function(e){
-    if(e.target.classList.contains('grid-num')){
+    if(e.target.classList.contains('grid-num')){      
       if(operator === ''){
-        value1 += e.target.id;
+        value1 += e.target.id;        
+        valueDisplay.textContent = value1;
+        display.appendChild(valueDisplay);
         console.log(value1);
       } else {
-        value2 += e.target.id;
+        value2 += e.target.id;        
+        valueDisplay.textContent = value2;
+        display.appendChild(valueDisplay);
         console.log(value2);
       }
     } else if(e.target.classList.contains('grid-operator')){
@@ -41,6 +47,8 @@ function operate(value1, value2, operator){
         console.log(operator);
       } else if(operator != ''){
         console.log(operate(Number(value1), Number(value2), operator));
+        valueDisplay.textContent = result;
+        display.appendChild(valueDisplay);
         value1 = result;
         value2 = '';
         operator = e.target.id;
@@ -49,7 +57,9 @@ function operate(value1, value2, operator){
       if(value1 === '' || operator === '' || value2 === ''){
         alert('Please enter some values!');
       } else {
-      console.log(operate(Number(value1), Number(value2), operator));
+        console.log(operate(Number(value1), Number(value2), operator));
+        valueDisplay.textContent = result;
+        display.appendChild(valueDisplay);
         value1 = result;
         value2 = '';
         operator = '';
