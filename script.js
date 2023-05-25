@@ -25,49 +25,74 @@ function operate(value1, value2, operator){
   };
 
   function startsCalculator(){
-  const display = document.querySelector('.display');
-  const valueDisplay = document.createElement('p');
-  const buttons = document.querySelectorAll("button");
-  buttons.forEach(button => button.addEventListener('click', function(e){
-    if(e.target.classList.contains('grid-num')){      
-      if(operator === ''){
-        value1 += e.target.id;        
-        valueDisplay.textContent = value1;
-        display.appendChild(valueDisplay);
-        console.log(value1);
-      } else {
-        value2 += e.target.id;        
-        valueDisplay.textContent = value2;
-        display.appendChild(valueDisplay);
-        console.log(value2);
-      }
-    } else if(e.target.classList.contains('grid-operator')){
-      if(operator === ''){
-        operator = e.target.id;
-        console.log(operator);
-      } else if(operator != ''){
-        console.log(operate(Number(value1), Number(value2), operator));
-        valueDisplay.textContent = result;
-        display.appendChild(valueDisplay);
-        value1 = result;
-        value2 = '';
-        operator = e.target.id;
-      }
-    } else if(e.target.id === 'equals'){
-      if(value1 === '' || operator === '' || value2 === ''){
-        alert('Please enter some values!');
-      } else {
-        console.log(operate(Number(value1), Number(value2), operator));
-        valueDisplay.textContent = result;
-        display.appendChild(valueDisplay);
-        value1 = result;
-        value2 = '';
-        operator = '';
-      }
-    } else if(e.target.id === 'clear-entry'){
-      alert('clear entry');
-    }
-  }));
+    const operatorButtons = document.querySelectorAll('.grid-operator');  
+    const display = document.querySelector('.display');
+    const valueDisplay = document.createElement('p');
+    const buttons = document.querySelectorAll("button");
+    buttons.forEach(button => button.addEventListener('click', function(e){
+      if(e.target.classList.contains('grid-num')){      
+        if(operator === ''){
+          value1 += e.target.id;   
+          valueDisplay.textContent = value1;
+          display.appendChild(valueDisplay);
+          console.log(value1);
+        } else {
+          value2 += e.target.id;        
+          valueDisplay.textContent = value2;
+          display.appendChild(valueDisplay);
+          operatorButtons.forEach(button => button.classList.remove('clicked'));
+          console.log(value2);
+        }
+      } else if(e.target.classList.contains('grid-operator')){
+        if((e.target.id == 'substract' || e.target.id == 'add' || e.target.id === 'divide' || e.target.id === 'multiply') && value1 === ''){
+          alert('Please enter a value.');
+        } else {
+        e.target.classList.add('clicked');   
+        if(operator === ''){
+          operator = e.target.id;          
+          console.log(operator);
+        } else if(operator != ''){
+          console.log(operate(Number(value1), Number(value2), operator));   
+          result = result.toString();     
+          valueDisplay.textContent = result;
+          display.appendChild(valueDisplay);
+          value1 = result;
+          value2 = '';
+          operator = e.target.id;
+        }}
+      } else if(e.target.id === 'equals'){
+        if(value1 === '' || operator === '' || value2 === ''){
+          alert('Please enter some values!');
+        } else {
+          console.log(operate(Number(value1), Number(value2), operator));
+          result = result.toString();     
+          valueDisplay.textContent = result;
+          display.appendChild(valueDisplay);
+          value1 = result;
+          value2 = '';
+          operator = '';
+        }
+      } else if(e.target.id === 'negative'){
+        if(value1 === ''){
+          alert('Please enter a value.');
+        } else {
+        if(value1 != '' && value1.charAt(0) === '-' && operator === ''){
+          value1 = value1.slice(1);      
+          valueDisplay.textContent = value1; 
+        }  else if(value1 != '' && operator === ''){
+          value1 = '-' + value1;       
+          valueDisplay.textContent = value1; 
+          console.log(value1); 
+        } else if(value2 != '' && value2.charAt(0) === '-'){
+          value2 = value2.slice(1);      
+          valueDisplay.textContent = value2; 
+        } else if(value2 != '' && operator != ''){
+          value2 = '-' + value2;
+          valueDisplay.textContent = value2;
+          console.log(value2);
+        }
+      }}
+    }));
 };
   
 startsCalculator();
