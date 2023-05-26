@@ -24,6 +24,105 @@ function operate(value1, value2, operator){
   }
   };
 
+  const operatorButtons = document.querySelectorAll('.grid-operator');  
+  const display = document.querySelector('.display');
+  const valueDisplay = document.createElement('p');
+  const buttons = document.querySelectorAll("button");
+  const makeNegButton = document.querySelector('#negative');
+  const calculateButton = document.querySelector('#equals');
+
+  function getValues(){
+    buttons.forEach(button => button.addEventListener('click', function(e){
+      if(e.target.classList.contains('grid-num')){      
+        if(operator === ''){
+          value1 += e.target.id;   
+          valueDisplay.textContent = value1;
+          display.appendChild(valueDisplay);
+          console.log(value1);
+        } else {
+          value2 += e.target.id;        
+          valueDisplay.textContent = value2;
+          display.appendChild(valueDisplay);
+          operatorButtons.forEach(button => button.classList.remove('clicked'));
+          console.log(value2);
+        }
+      }
+    }))
+  }
+
+  function getOperator(){
+    buttons.forEach(button => button.addEventListener('click', function(e){
+      if(e.target.classList.contains('grid-operator')){
+        if((e.target.id == 'substract' || e.target.id == 'add' || e.target.id === 'divide' || e.target.id === 'multiply') && value1 === ''){
+            alert('Please enter a value.');
+          } else {
+          e.target.classList.add('clicked');   
+          if(operator === ''){
+            operator = e.target.id;          
+            console.log(operator);
+          } else if(operator != ''){
+            operatorButtons.forEach(button => button.classList.remove('clicked'));
+            e.target.classList.add('clicked');  
+            console.log(operate(Number(value1), Number(value2), operator));   
+            result = result.toString();     
+            valueDisplay.textContent = result;
+            display.appendChild(valueDisplay);
+            value1 = result;
+            value2 = '';
+            operator = e.target.id;
+          } 
+        }}
+    } ))  
+  }
+
+  function makeNegative(){
+    makeNegButton.addEventListener('click', function(){
+      if(value1 === ''){
+        alert('Please enter a value.');
+      } else {
+      if(value1 != '' && value1.charAt(0) === '-' && operator === ''){
+        value1 = value1.slice(1);      
+        valueDisplay.textContent = value1; 
+      }  else if(value1 != '' && operator === ''){
+        value1 = '-' + value1;       
+        valueDisplay.textContent = value1; 
+        console.log(value1); 
+      } else if(value2 != '' && value2.charAt(0) === '-'){
+        value2 = value2.slice(1);      
+        valueDisplay.textContent = value2; 
+      } else if(value2 != '' && operator != ''){
+        value2 = '-' + value2;
+        valueDisplay.textContent = value2;
+        console.log(value2);
+      }}
+    })
+  }
+
+  function calculate(){
+    calculateButton.addEventListener('click', function() {
+      if(value1 === '' || operator === '' || value2 === ''){
+        alert('Please enter some values!');
+      } else {
+        console.log(operate(Number(value1), Number(value2), operator));
+        result = result.toString();     
+        valueDisplay.textContent = result;
+        display.appendChild(valueDisplay);
+        value1 = result;
+        value2 = '';
+        operator = '';
+      }
+    })
+  }
+
+getValues();
+getOperator();
+makeNegative();
+calculate();
+
+
+
+  /*
+
   function startsCalculator(){
     const operatorButtons = document.querySelectorAll('.grid-operator');  
     const display = document.querySelector('.display');
@@ -99,7 +198,7 @@ function operate(value1, value2, operator){
   
 startsCalculator();
 
-
+*/
 
 
 
