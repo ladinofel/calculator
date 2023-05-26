@@ -52,6 +52,8 @@ function operate(value1, value2, operator){
           operator = e.target.id;          
           console.log(operator);
         } else if(operator != ''){
+          operatorButtons.forEach(button => button.classList.remove('clicked'));
+          e.target.classList.add('clicked');  
           console.log(operate(Number(value1), Number(value2), operator));   
           result = result.toString();     
           valueDisplay.textContent = result;
