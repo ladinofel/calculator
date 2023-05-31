@@ -31,6 +31,7 @@ function operate(value1, value2, operator){
   const makeNegButton = document.querySelector('#negative');
   const calculateButton = document.querySelector('#equals');
   const pointButton = document.querySelector('.point');
+  const clearButton = document.querySelector('#clear');
 
 
   function getValues(){
@@ -38,23 +39,34 @@ function operate(value1, value2, operator){
       if(e.target.classList.contains('grid-num')){      
         if(operator === ''){
           value1 += e.target.id;
-          if(e.target.id === '.'){
-            pointButton.disabled = true;
-          }
           valueDisplay.textContent = value1;
           display.appendChild(valueDisplay);
           console.log(value1);
         } else {
-          value2 += e.target.id;
-          if(e.target.id === '.'){
-            pointButton.disabled = true;
-          }        
+          value2 += e.target.id;     
           valueDisplay.textContent = value2;
           display.appendChild(valueDisplay);
           operatorButtons.forEach(button => button.classList.remove('clicked'));
           console.log(value2);
         }
       }
+      pointButton.addEventListener('click', function(){
+        if(operator === '' && !value1.includes('.')){
+          value1 += '.';
+          valueDisplay.textContent = value1;         
+          display.appendChild(valueDisplay);
+          console.log(value1);         
+        } else if(operator === '' && value1.includes('.')){
+          return false;          
+        } else if(operator != '' && !value2.includes('.')){
+          value2 += '.';
+          valueDisplay.textContent = value2;         
+          display.appendChild(valueDisplay);
+          console.log(value2);
+        } else if(operator != '' && value2.includes('.')){
+          return false;  
+        }
+      })
     }))
     document.addEventListener('keydown', function(e){
       if((e.key >= 0 && e.key <=9)){
@@ -90,7 +102,6 @@ function operate(value1, value2, operator){
     } )
   };
    
-
   function getOperator(){
     buttons.forEach(button => button.addEventListener('click', function(e){
       if(e.target.classList.contains('grid-operator')){
@@ -182,7 +193,6 @@ function operate(value1, value2, operator){
         value1 = result;
         value2 = '';
         operator = '';
-        pointButton.disabled = false;
       }
     })
     document.addEventListener('keydown', function(e){
@@ -200,15 +210,21 @@ function operate(value1, value2, operator){
         }}
     } )
   }  
-  
+ 
+
 document.addEventListener('keyup', function(e){
   if(e.key === 'Escape'){
-    this.location.reload();
+    display.replaceChildren();
+    value1 = '';
+    value2 = '';
+    operator = '';
+    result = 0;
   }
 })
-
 
 getValues();
 getOperator();
 makeNegative();
 calculate();
+
+
