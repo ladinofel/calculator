@@ -30,18 +30,25 @@ function operate(value1, value2, operator){
   const buttons = document.querySelectorAll("button");
   const makeNegButton = document.querySelector('#negative');
   const calculateButton = document.querySelector('#equals');
+  const pointButton = document.querySelector('.point');
 
 
   function getValues(){
     buttons.forEach(button => button.addEventListener('click', function(e){
       if(e.target.classList.contains('grid-num')){      
         if(operator === ''){
-          value1 += e.target.id;   
+          value1 += e.target.id;
+          if(e.target.id === '.'){
+            pointButton.disabled = true;
+          }
           valueDisplay.textContent = value1;
           display.appendChild(valueDisplay);
           console.log(value1);
         } else {
-          value2 += e.target.id;        
+          value2 += e.target.id;
+          if(e.target.id === '.'){
+            pointButton.disabled = true;
+          }        
           valueDisplay.textContent = value2;
           display.appendChild(valueDisplay);
           operatorButtons.forEach(button => button.classList.remove('clicked'));
@@ -50,21 +57,39 @@ function operate(value1, value2, operator){
       }
     }))
     document.addEventListener('keydown', function(e){
-      if((e.key >= 0 && e.key <=9) || e.key === '.'){
+      if((e.key >= 0 && e.key <=9)){
         if(operator === ''){
           value1 += e.key;
-          valueDisplay.textContent = value1;
+          valueDisplay.textContent = value1;         
           display.appendChild(valueDisplay);
-          console.log(value1);
-        } else {
+          console.log(value1);         
+        } else if(operator != ''){
           value2 += e.key;
           valueDisplay.textContent = value2;
           display.appendChild(valueDisplay);
           operatorButtons.forEach(button => button.classList.remove('clicked'));
           console.log(value2);
+        }}
+        if(e.key === '.'){
+          if(operator === '' && !value1.includes('.')){
+            value1 += e.key;
+            valueDisplay.textContent = value1;         
+            display.appendChild(valueDisplay);
+            console.log(value1);         
+          } else if(operator === '' && value1.includes('.')){
+            return false;          
+          } else if(operator != '' && !value2.includes('.')){
+            value2 += e.key;
+            valueDisplay.textContent = value2;         
+            display.appendChild(valueDisplay);
+            console.log(value2);
+          } else if(operator != '' && value2.includes('.')){
+            return false;  
+          }
         }
-    }});  
-  }
+    } )
+  };
+   
 
   function getOperator(){
     buttons.forEach(button => button.addEventListener('click', function(e){
@@ -72,7 +97,8 @@ function operate(value1, value2, operator){
         if((e.target.id === '-' || e.target.id === '+' || e.target.id === '/' || e.target.id === '*') && value1 === ''){
             alert('Please enter a value.');
           } else {
-          e.target.classList.add('clicked');   
+          e.target.classList.add('clicked'); 
+          pointButton.disabled = false;  
           if(operator === ''){
             operator = e.target.id;          
             console.log(operator);
@@ -86,6 +112,7 @@ function operate(value1, value2, operator){
             value1 = result;
             value2 = '';
             operator = e.target.id;
+            pointButton.disabled = false; 
           } 
         }}
     } ))  
@@ -155,6 +182,7 @@ function operate(value1, value2, operator){
         value1 = result;
         value2 = '';
         operator = '';
+        pointButton.disabled = false;
       }
     })
     document.addEventListener('keydown', function(e){
@@ -178,6 +206,7 @@ document.addEventListener('keyup', function(e){
     this.location.reload();
   }
 })
+
 
 getValues();
 getOperator();
